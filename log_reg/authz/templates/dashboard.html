@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap" rel="stylesheet">
+    <title>Dashboard</title>
+</head>
+
+<body>
+    <div class="header">
+        <div class="navbar">
+            <h1 class="text-center">Welcome {{user.first_name}} {{user.last_name}}</h1>
+            <div class="dropdown">
+                <button class="dropbtn">Menu</button>
+                <div class="dropdown-content">
+                    <a href="create_poemp">Add Poem</a>
+                    <a href="/edit_user">Edit User Info</a>
+                    <a href="/logout">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-section">
+        {% for x in all_poems %}
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <h1 class="card-title1">{{x.poem_title}}</h1>
+                    <h4>By {{x.user.first_name}} {{x.user.last_name}} </h4>
+                    {% if x.likes.count == 1 %}
+                    <p>{{x.likes.count}} Like</p>
+                    {% endif %}
+                    {% if x.likes.count > 1 %} <p>{{x.likes.count}} Likes</p>
+                    {% endif %}
+                    <!-- <img src="my_img.png" alt="Avatar" style="width:300px;height:300px;"> -->
+                </div>
+                <div class="flip-card-back">
+                    {% if x.user.id == user.id %}
+                    <a href="/destroy/{{x.id}}" class="delbutton">delete</a>
+                    {% endif %}
+                    <h5>{{x.poem_poem}}</h5>
+                    <div class="utilties">
+                        {% if x.user.id != user.id %}
+                        <a href="/like/{{x.id}}/{{user.id}}" class="button1">Like</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" async></script>
+</body>
+
+</html>

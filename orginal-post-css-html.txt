@@ -1,0 +1,52 @@
+dashboard html for orginal post-card
+    <div class="poem_div">
+        {% for x in all_poems %}
+        <div class="poem_card">
+            <h2 class="card-title">{{x.poem_title}}</h2>
+            <p class="card-text">{{x.poem_poem}}</p>
+            <p>By {{x.user.first_name}} {{x.user.last_name}} </p>
+            <div class="utilties">
+                <p class="card-text">{{ x.likes.count }} </p>
+                {% if x.user.id != user.id %}
+                <a href="/like/{{x.id}}/{{user.id}}" class="button1">Like</a>
+                {% endif %}
+                {% if x.user.id == user.id %}
+                <a href="/destroy/{{x.id}}" class="button1">x</a>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+______________________________________________________________
+
+Css for orginal post-card
+
+.poem_div {
+    display: flex;
+    flex-direction: row;
+    margin: 10px;
+}
+.poem_card {
+    background-color: #F2A311;
+    padding: 8px;
+    margin: 10px;
+    width:300px;
+    outline:  solid 3px #000;
+    font-family: 'Caveat', cursive;
+    text-align: center;
+    color: #000;
+}
+
+.card-title {
+    text-decoration: underline;
+    text-transform: uppercase;
+    color: #20332e;
+}
+
+
+.utilties {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat&display=swap" rel="stylesheet">
+    <title>Create Poem</title>
+</head>
+<body>
+    <div class="header">
+        <div class="navbar">
+            <h1 class="text-center">Welcome {{user.first_name}} {{user.last_name}}</h1>
+            <div class="dropdown">
+                <button class="dropbtn">Menu</button>
+                <div class="dropdown-content">
+                    <a href="/dashboard">Dashboard</a>
+                    <a href="/edit_user">Edit User Info</a>
+                    <a href="/logout">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <form action="/create_poem" method="post" class="col-4 mx-auto bg-light p-5 card border-dark mb-3 btn-outline-dark">
+        <p class="welcome">We're Excited For Your Creation!</p>
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="poem_title">Title:</label>
+            <input type="text" name="poem_title" class="form-control">
+            <span class="text-danger">
+                {% for message in messages %}
+                {% if message.tags == 'poem_title error' %}
+                {{message}}
+                {% endif %}
+                {% endfor %}
+            </span>
+        </div>
+        <div class="form-group">
+            <label for="poem_poem">Poem:</label>
+            <input type="text" name="poem_poem" class="form-control">
+            <span class="text-danger">
+                {% for message in messages %}
+                {% if message.tags == 'poem_poem error' %}
+                {{message}}
+                {% endif %}
+                {% endfor %}
+            </span>
+        </div>
+        <input type="submit" value="Submit" class="button">
+    </form>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" async></script>
+</body>
+</html>
